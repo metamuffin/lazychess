@@ -2,8 +2,11 @@ module Lib where
 
 import Control.Monad
 import Display
-import Ruleset
+import Game
 import Tuple
+import Types
+
+import Ruleset
 
 someFunc :: IO ()
 someFunc = void $ gameLoop initialState

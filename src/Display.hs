@@ -3,7 +3,8 @@
 
 module Display where
 
-import Ruleset
+import Game
+import Types
 
 instance Show State where
   show state = "Current player: " ++ pChar ++ "\n" ++ showBoard (stateBoard state)

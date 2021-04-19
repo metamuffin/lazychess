@@ -26,9 +26,12 @@ source-repository head
 library
   exposed-modules:
       Display
+      Game
+      Helper
       Lib
       Ruleset
       Tuple
+      Types
   other-modules:
       Paths_lazychess
   hs-source-dirs:
