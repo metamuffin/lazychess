@@ -24,6 +24,10 @@ isPosition = onSnd (==)
 atPosition :: State -> Position -> Maybe PieceKind
 atPosition state pos = safeHead $ map fst $ filter (\(_, p) -> p == pos) (stateBoard state)
 
+atPositionKeepPos :: State -> Position -> Maybe Piece 
+atPositionKeepPos state pos = safeHead  $ filter (\(_, p) -> p == pos) (stateBoard state)
+
+
 -- 8-neighbourhood
 isAdjacent :: Position -> Position -> Bool
 isAdjacent (ax, ay) (bx, by) = abs (ax - bx) <= 1 && abs (ay - by) <= 1

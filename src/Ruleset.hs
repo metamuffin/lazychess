@@ -1,5 +1,7 @@
 module Ruleset where
 
+import Data.List
+import Data.Maybe
 import Helper
 import Types
 
@@ -32,12 +34,31 @@ initialState =
       stateActivePlayer = White
     }
 
--- TODO
+posAdd (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
+
+pawnDirection White = (0, 1)
+pawnDirection Black = (0, -1)
+
 -- Just captures
 captureTargets :: State -> Piece -> [Piece]
-captureTargets state ((t, c), p) = filter (\((ot, oc), op) -> isAdjacent p op && opponent c == oc) (stateBoard state)
+captureTargets state piece@((t, c), p) = filter (\(_, pos) -> fmap snd (atPosition state pos) == Just (opponent c)) $ captureTargetsRaw state piece
 
--- TODO
 -- Not captures
 moveTargets :: State -> Piece -> [Position]
-moveTargets state ((t, c), p) = filter (isEmptyField state) $ filter (isAdjacent p) allPositions
+moveTargets state piece@(_, pos) = filter (isEmptyField state) $ moveTargetsRaw state piece
+
+moveTargetsRaw :: State -> Piece -> [Position]
+captureTargetsRaw :: State -> Piece -> [Piece]
+-- asdasd
+
+moveTargetsRaw state ((Pawn, color), pos) = [posAdd pos $ pawnDirection color]
+
+captureTargetsRaw state ((Pawn, color), pos) =
+  mapMaybe
+    (atPositionKeepPos state)
+    [ posAdd pos (posAdd (1, 0) $ pawnDirection color),
+      posAdd pos (posAdd (-1, 0) $ pawnDirection color)
+    ]
+
+
+
